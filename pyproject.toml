@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dbt-tree"
+version = "0.1.0"
+description = "Pretty terminal lineage tree for dbt selectors (dbt-tree \"model+\")."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Karthik Rajashekaran" }]
+keywords = [
+    "dbt",
+    "lineage",
+    "dag",
+    "tree",
+    "cli",
+    "data-engineering",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Utilities",
+]
+dependencies = ["rich>=13.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "ruff>=0.4"]
+
+[project.scripts]
+dbt-tree = "dbt_tree.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/KarthikRajashekaran/dbt-tree"
+Issues = "https://github.com/KarthikRajashekaran/dbt-tree/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dbt_tree"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
