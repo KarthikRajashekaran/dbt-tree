@@ -53,7 +53,7 @@ def _is_fusion(dbt_path: str) -> bool:
 
 def find_dbt(explicit: str | None = None) -> str:
     # Explicit wins. Then $DBT_TREE_DBT. Then the *active virtualenv* (what
-    # `source .../activate` / a `gva`-style alias sets), so dbt-tree follows the
+    # `source .../activate` sets VIRTUAL_ENV), so dbt-tree follows the
     # same dbt you'd get by typing `dbt` in that shell. PATH is the last resort.
     explicit_choice = explicit or os.environ.get("DBT_TREE_DBT")
     if explicit_choice:
@@ -93,13 +93,13 @@ def find_dbt(explicit: str | None = None) -> str:
         raise DbtError(
             "the only dbt found is dbt Fusion, which is not supported yet "
             f"({existing[0]}).\nPoint dbt-tree at dbt-core:\n"
-            "  - activate your dbt-core venv first (e.g. `gva`), or\n"
+            "  - activate your dbt-core venv first, or\n"
             "  - set $DBT_TREE_DBT=/path/to/dbt-core/bin/dbt, or\n"
             "  - pass --dbt-executable /path/to/dbt-core/bin/dbt"
         )
 
     raise DbtError(
-        "could not find a dbt executable. Activate your dbt virtualenv (e.g. `gva`), "
+        "could not find a dbt executable. Activate your dbt virtualenv, "
         "or pass --dbt-executable / set $DBT_TREE_DBT."
     )
 
@@ -184,7 +184,7 @@ def _summarize_failure(dbt: str, code: int, stderr: str, stdout: str) -> str:
         msg += (
             "\n\nThis looks like dbt Fusion (stricter parsing). Point dbt-tree at your "
             "dbt-core install:\n"
-            "  - activate your dbt venv first (e.g. `gva`), or\n"
+            "  - activate your dbt venv first, or\n"
             "  - pass --dbt-executable /path/to/dbt-core/bin/dbt, or\n"
             "  - set $DBT_TREE_DBT."
         )

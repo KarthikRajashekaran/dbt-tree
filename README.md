@@ -48,15 +48,32 @@ dbt-tree prefers **dbt-core** and will skip a **dbt Fusion** binary when a core
 install is available (Fusion's stricter parsing and different `ls` surface aren't
 supported yet). 
 
-### Recommended workflow:
+### Quickstart (e.g. to try it out)
 
 ```bash
-gva # activate your dbt venv (dbt-core)
-dbt-tree "my_model+"
+# 1. Activate the environment where your dbt-core lives (any venv tool works):
+source /path/to/your/dbt-venv/bin/activate     # or: conda activate <env>, poetry shell, ...
+
+# 2. Confirm dbt-core is runnable (should NOT say "dbt-fusion"):
+dbt --version
+
+# 3. Install dbt-tree into that same environment:
+pip install dbt-tree
+
+# 4. From inside your dbt project, draw lineage:
+cd /path/to/your/dbt_project
+dbt-tree "my_model+"                 # downstream
+dbt-tree "+my_model"                 # upstream
+dbt-tree "+my_model+"                # both directions
 ```
 
-Tip: `pip install` dbt-tree *into that same dbt venv* so `gva` puts both `dbt` and
-`dbt-tree` on your `PATH` together.
+No warehouse connection is needed (`dbt ls` only parses the project). If you'd
+rather not activate anything, point dbt-tree straight at dbt instead:
+
+```bash
+dbt-tree "my_model+" --dbt-executable /path/to/dbt-core/bin/dbt \
+  --project-dir /path/to/your/dbt_project --target dev
+```
 
 ## Usage
 
