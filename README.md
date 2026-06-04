@@ -26,8 +26,8 @@ works exactly as it does in dbt itself: `model+`, `+model`, `+model+`,
 Install into the **same environment as your dbt** so they share a `PATH`:
 
 ```bash
-pip install dbt-tree           # once published
-# or, from source:
+pip install dbt-tree
+# or, latest from source:
 pip install "git+https://github.com/KarthikRajashekaran/dbt-tree.git"
 ```
 
