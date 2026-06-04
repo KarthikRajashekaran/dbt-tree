@@ -11,15 +11,28 @@ dbt-tree "my_model+"
 works exactly as it does in dbt itself: `model+`, `+model`, `+model+`,
 `2+model+3`, `tag:nightly+`, `path:models/marts`, set unions, and so on.
 
+## Requirements
+
+- A working **dbt-core** install that you can run as `dbt` (any virtualenv tool is
+  fine — `venv`, `virtualenv`, `conda`, `poetry`, `uv`, …). The only requirement
+  is that the `dbt` executable is reachable (active venv, on `PATH`, or via
+  `$DBT_TREE_DBT` / `--dbt-executable`).
+- Python 3.10+.
+
+`dbt ls` is parse-only, so **no warehouse connection is needed** to draw the tree.
+
 ## Install
+
+Install into the **same environment as your dbt** so they share a `PATH`:
 
 ```bash
 pip install dbt-tree           # once published
 # or, from source:
-pip install git+https://github.com/KarthikRajashekaran/dbt-tree.git
+pip install "git+https://github.com/KarthikRajashekaran/dbt-tree.git"
 ```
 
-`dbt` itself is **not** a dependency — `dbt-tree` shells out to your existing dbt.
+`dbt` itself is **not** a Python dependency — `dbt-tree` shells out to your
+existing dbt rather than pinning a version.
 
 ### Which dbt does it use?
 
@@ -27,8 +40,8 @@ Resolution order:
 
 1. `--dbt-executable`
 2. `$DBT_TREE_DBT`
-3. **the active virtualenv** (`$VIRTUAL_ENV/bin/dbt`) — so if you activate your dbt
-   venv first (e.g. an alias like `gva`), dbt-tree uses the same dbt as your shell
+3. **the active virtualenv** (`$VIRTUAL_ENV/bin/dbt`) — so once you activate your
+   dbt venv, dbt-tree uses the same dbt as your shell
 4. `dbt` on `PATH`
 
 dbt-tree prefers **dbt-core** and will skip a **dbt Fusion** binary when a core
